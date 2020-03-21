@@ -9,13 +9,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    var idfa: String = identifierForAdvertising() ?? ""
     var body: some View {
-        Text("Hello, World!")
+        Text(idfa)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+import AdSupport
+
+func identifierForAdvertising() -> String? {
+    // check if advertising tracking is enabled in user’s setting
+    if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
+        return ASIdentifierManager.shared().advertisingIdentifier.uuidString
+    } else {
+        return nil
     }
 }
